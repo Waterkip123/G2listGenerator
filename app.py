@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from io import BytesIO
 from openpyxl.styles import Font
+from openpyxl.styles import PatternFill
 
 st.set_page_config(page_title="Excel Processor", layout="centered")
 
@@ -117,11 +118,19 @@ if uploaded_file and output_name:
             platinum_ski_condition = new_df["subType"] == "Huur ski - Platinum"
             platinum_board_condition = new_df["subType"] == "Huur snowboard - platinum"
 
+        
+            header_fill = PatternFill(start_color="000000", end_color="000000", fill_type="solid")  # black
+            gray_fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type="solid")  # light gray
+
             for col_idx in range(1, len(new_df.columns) + 1):
-                worksheet.cell(row=1, column=col_idx).font = Font(name="Aptos Narrow", size=14)
+                worksheet.cell(row=1, column=col_idx).font = Font(name="Aptos Narrow", color="FFFFFF", size=14)
+                worksheet.cell(row=1, column=col_idx).fill = header_fill
+
 
             for row_idx in range(2, len(new_df) + 2):
                 for col_idx in range(1, len(new_df.columns) + 1):
+                    if row_idx % 2 == 1:
+                        cell.fill = gray_fill
                     cell = worksheet.cell(row=row_idx, column=col_idx)
 
                     if gold_board_condition.iloc[row_idx - 2]:
