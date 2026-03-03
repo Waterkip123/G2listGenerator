@@ -2,8 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from io import BytesIO
-from openpyxl.styles import Font
-from openpyxl.styles import PatternFill
+from openpyxl.styles import Font, Border, Side, PatternFill
 
 st.set_page_config(page_title="Excel Processor", layout="centered")
 
@@ -17,7 +16,7 @@ hotel_map = {
 
 uploaded_file = st.file_uploader(
     "Upload Fruhstuk Excel bestand",
-    type=["xlsx", "xls"]
+    type=["xlsx", "xls", "xlsm"]
 )
 
 output_name = st.text_input("Voer bestandsnaam in")
@@ -122,6 +121,15 @@ if uploaded_file and output_name:
             header_fill = PatternFill(start_color="000000", end_color="000000", fill_type="solid")  # black
             gray_fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type="solid")  # light gray
 
+            thin_side = Side(border_style="thin", color="000000")
+            thin_border = Border(
+                left=thin_side,
+                right=thin_side,
+                top=thin_side,
+                bottom=thin_side
+            )
+
+
             for col_idx in range(1, len(new_df.columns) + 1):
                 worksheet.cell(row=1, column=col_idx).font = Font(name="Aptos Narrow", color="FFFFFF", size=14)
                 worksheet.cell(row=1, column=col_idx).fill = header_fill
@@ -129,6 +137,8 @@ if uploaded_file and output_name:
 
             for row_idx in range(2, len(new_df) + 2):
                 for col_idx in range(1, len(new_df.columns) + 1):
+                    cell.border = thin_border
+
                     if row_idx % 2 == 1:
                         cell.fill = gray_fill
                     cell = worksheet.cell(row=row_idx, column=col_idx)
