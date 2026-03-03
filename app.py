@@ -4,7 +4,16 @@ import numpy as np
 from io import BytesIO
 from openpyxl.styles import Font, Border, Side, PatternFill
 
-st.set_page_config(page_title="Excel Processor", page_icon="g2Logo.ico", layout="centered")
+st.set_page_config(
+    page_title="Excel Processor", 
+    page_icon="g2Logo.ico", 
+    layout="centered",     
+    initial_sidebar_state="collapsed",
+    menu_items={
+        'Get Help': None,
+        'Report a bug': None,
+        'About': None
+    })
 
 st.title("Excel Processor")
 
