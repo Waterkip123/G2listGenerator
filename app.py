@@ -4,7 +4,7 @@ import numpy as np
 from io import BytesIO
 from openpyxl.styles import Font, Border, Side, PatternFill
 
-st.set_page_config(page_title="Excel Processor", layout="centered")
+st.set_page_config(page_title="Excel Processor", page_icon="g2Logo.ico", layout="centered")
 
 st.title("Excel Processor")
 
@@ -137,11 +137,12 @@ if uploaded_file and output_name:
 
             for row_idx in range(2, len(new_df) + 2):
                 for col_idx in range(1, len(new_df.columns) + 1):
+                    cell = worksheet.cell(row=row_idx, column=col_idx)
+
                     cell.border = thin_border
 
                     if row_idx % 2 == 1:
                         cell.fill = gray_fill
-                    cell = worksheet.cell(row=row_idx, column=col_idx)
 
                     if gold_board_condition.iloc[row_idx - 2]:
                         cell.font = Font(color="FF0000", name="Aptos Narrow", size=14)
