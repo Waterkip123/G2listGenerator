@@ -1,0 +1,24 @@
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.env/
+.venv/
+
+# Excel and output files
+*.xlsx
+*.xls
+
+# macOS system files
+.DS_Store
+
+# PyInstaller build folders
+build/
+dist/
+
+# Other temporary files
+*.log
+*.bak
