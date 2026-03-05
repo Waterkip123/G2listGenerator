@@ -69,14 +69,18 @@ if uploaded_file and output_name:
         new_df.loc[df["height"] == 165, "pole"] = 110
 
         # Sort
+        new_df["hotel_sort"] = new_df["hotel"].str.lower()
+        new_df["name_sort"] = new_df["fullName"].str.lower()
+
         new_df.sort_values(
-            by=["hotel", "startDate", "fullName"],
+            by=["hotel_sort", "startDate", "name_sort"],
             inplace=True
         )
 
-        # Nummer per hotel reset
-        new_df["Nummer"] = new_df.groupby("hotel").cumcount() + 1
+        new_df.drop(columns=["hotel_sort", "name_sort"], inplace=True)
 
+        # Nummer per hotel reset
+        new_df["Nummer"] = range(1, len(new_df) + 1)
         # Pole logic
         new_df["pole"] = new_df["pole"].astype("string")
 
@@ -164,6 +168,16 @@ if uploaded_file and output_name:
 
                     else:
                         cell.font = Font(name="Aptos Narrow", size=14)
+
+                    if pd.isna(new_df["shoeType"].iloc[row_idx - 2]):
+                        current = cell.font
+                        cell.font = Font(
+                            name=current.name,
+                            size=current.size,
+                            bold=current.bold,
+                            italic=True,
+                            color=current.color
+                        )
 
         buffer.seek(0)
 
